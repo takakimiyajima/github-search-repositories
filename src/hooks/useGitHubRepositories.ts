@@ -10,12 +10,13 @@ export type Repository = {
 }
 
 type GitHubSearch = {
+  message?: string
   total_count: number
   items: {
     id: number
     name: string
     stargazers_count: number
-    url: string
+    html_url: string
     updated_at: string
   }[]
 }
@@ -43,7 +44,7 @@ export const useGitHubRepositories = () => {
     return res.json()
   }
 
-  useQuery<GitHubSearch>(
+  const { isFetching } = useQuery<GitHubSearch>(
     ["GitHubSearch", searchStr, page],
     () => fetchGitHub(searchStr, page),
     {
@@ -62,13 +63,15 @@ export const useGitHubRepositories = () => {
           name: item.name,
           updatedAt: item.updated_at,
           stargazersCount: item.stargazers_count,
-          url: item.url,
+          url: item.html_url,
         }
       }) ?? []
     )
   }
 
   return {
+    isFetching,
+    message: searchedItem?.message,
     repositories: changeRepositoryProp(),
     totalPages: Math.ceil(searchedItem?.total_count / PER_PAGE),
     searchStr,
