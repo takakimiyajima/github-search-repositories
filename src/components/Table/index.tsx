@@ -9,9 +9,7 @@ import {
   Td,
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import {
-  Repository,
-} from '@/hooks/useGitHubRepositories'
+import { Repository } from '@/hooks/useGitHubRepositories'
 
 type Prop = {
   repositories: Repository[]
@@ -28,21 +26,25 @@ export const Table: FC<Prop> = ({ repositories }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {repositories.map(({ id, name, url, updatedAt, stargazersCount }) => (
-          <Tr key={`repository-${id}`}>
-            <Td>
-              <Link
-                href={url}
-                target="_blank"
-              >
-                {name}
-                <ExternalLinkIcon ml="1rem" />
-              </Link>
-            </Td>
-            <Td>{updatedAt}</Td>
-            <Td>{stargazersCount}</Td>
-          </Tr>
-        ))}
+        {repositories.map(({ id, name, url, updatedAt, stargazersCount }) => {
+          const date = new Date(updatedAt)
+          const latestUpdated =  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+          return (
+            <Tr key={`repository-${id}`}>
+              <Td>
+                <Link
+                  href={url}
+                  target="_blank"
+                >
+                  {name}
+                  <ExternalLinkIcon ml="1rem" />
+                </Link>
+              </Td>
+              <Td>{latestUpdated}</Td>
+              <Td>{stargazersCount}</Td>
+            </Tr>
+          )
+        })}
       </Tbody>
     </TableContainer>
   )

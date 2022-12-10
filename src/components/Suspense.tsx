@@ -4,6 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary'
 import {
   Box,
   Button,
+  Flex,
+  Spinner,
 } from '@chakra-ui/react'
 
 type SuspenseProp = {
@@ -12,7 +14,7 @@ type SuspenseProp = {
 
 export const ErrorResetBoundary: FC<SuspenseProp> = ({ children }) => {
   return (
-    <Box h="100vh">
+    <Flex h="100vh" w="100%" justify="center" align="center">
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary
@@ -32,7 +34,7 @@ export const ErrorResetBoundary: FC<SuspenseProp> = ({ children }) => {
                   alignItems="center"
                   fontWeight="bold"
                 >
-                  Loading...
+                  <Spinner w={30} h={30} />
                 </Box>
               }
             >
@@ -41,6 +43,6 @@ export const ErrorResetBoundary: FC<SuspenseProp> = ({ children }) => {
           </ErrorBoundary>
       )}
       </QueryErrorResetBoundary>
-    </Box>
+    </Flex>
   )
 }

@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Box,
+  Button,
   Flex,
   Heading,
   InputGroup,
@@ -13,6 +14,7 @@ import { Table, Pagination } from "@/components";
 import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
 
 export const Home: FC = () => {
+  const [input, setInput] = useState('')
   const {
     repositories,
     totalPages,
@@ -23,7 +25,7 @@ export const Home: FC = () => {
   } = useGitHubRepositories()
 
   return (
-    <Flex h="100vh" px="3rem" py="2rem" direction="column" gap="1rem">
+    <Flex w="100%" h="100vh" px="3rem" py="2rem" direction="column" gap="1rem">
       <Flex align="center">
         <Box w="40%">
           <Heading as="h2">Search GitHub Repositories</Heading>
@@ -32,9 +34,11 @@ export const Home: FC = () => {
           <InputLeftElement pointerEvents="none" children={<SearchIcon />} />
           <Input
             type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             placeholder="Search repositories"
-            onBlur={(e) => setSearchStr(e.target.value)}
           />
+          <Button ml="1rem" onClick={() => setSearchStr(input)}>Search</Button>
         </InputGroup>
       </Flex>
       {searchStr && repositories.length ? (
@@ -48,7 +52,7 @@ export const Home: FC = () => {
         </>
       ) : (
         <Flex h={400} justify="center" align="center" fontWeight="bold">
-          <Text fontSize="1.5rem">Nothing. Input words you want to search</Text>
+          <Text fontSize="1.5rem" textAlign="center">Nothing. <br />Input a word you want to search</Text>
         </Flex>
       )}
     </Flex>
