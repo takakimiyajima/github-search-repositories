@@ -1,7 +1,7 @@
-import { FC, useState, useEffect, ReactElement } from "react"
-import { Button, HStack } from "@chakra-ui/react"
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons"
-import { makePaginationButtons } from "./utils/makePaginationButtons"
+import { FC, useState, useEffect, ReactElement } from 'react'
+import { Button, HStack } from '@chakra-ui/react'
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { makePaginationButtons } from './utils/makePaginationButtons'
 
 type Props = {
   totalPages: number

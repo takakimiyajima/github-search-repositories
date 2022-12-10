@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState } from 'react'
 import {
   Box,
   Button,
@@ -8,10 +8,10 @@ import {
   InputLeftElement,
   Input,
   Text,
-} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import { Table, Pagination } from "@/components";
-import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
+} from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons'
+import { Table, Pagination } from '@/components'
+import { useGitHubRepositories } from '@/hooks/useGitHubRepositories'
 
 export const Home: FC = () => {
   const [input, setInput] = useState('')
@@ -56,5 +56,5 @@ export const Home: FC = () => {
         </Flex>
       )}
     </Flex>
-  );
-};
+  )
+}

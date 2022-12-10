@@ -1,35 +1,35 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 export type Repository = {
-  id: number;
-  name: string;
-  stargazersCount: number;
-  url: string;
-  updatedAt: string;
-};
+  id: number
+  name: string
+  stargazersCount: number
+  url: string
+  updatedAt: string
+}
 
 type GitHubSearch = {
-  total_count: number;
+  total_count: number
   items: {
-    id: number;
-    name: string;
-    stargazers_count: number;
-    url: string;
-    updated_at: string;
-  }[];
-};
+    id: number
+    name: string
+    stargazers_count: number
+    url: string
+    updated_at: string
+  }[]
+}
 
-export const PER_PAGE = 10;
+export const PER_PAGE = 10
 
 export const useGitHubRepositories = () => {
-  const [searchStr, setSearchStr] = useState<string>("");
-  const [searchedItem, setSearchedItem] = useState<GitHubSearch>(undefined);
-  const [page, setPage] = useState<number>(1);
+  const [searchStr, setSearchStr] = useState<string>("")
+  const [searchedItem, setSearchedItem] = useState<GitHubSearch>(undefined)
+  const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
-    setPage(() => 1);
-  }, [searchStr]);
+    setPage(() => 1)
+  }, [searchStr])
 
   const fetchGitHub = async (searchStr: string, page: number) => {
     const res = await fetch(
@@ -39,11 +39,11 @@ export const useGitHubRepositories = () => {
           Authorization: "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",
         },
       }
-    );
-    return res.json();
-  };
+    )
+    return res.json()
+  }
 
-  const { error } = useQuery<GitHubSearch>(
+  useQuery<GitHubSearch>(
     ["GitHubSearch", searchStr, page],
     () => fetchGitHub(searchStr, page),
     {
@@ -52,11 +52,7 @@ export const useGitHubRepositories = () => {
       onSuccess: setSearchedItem,
       onError: () => setSearchedItem(undefined),
     }
-  );
-
-  // TODO
-  console.log("error-----");
-  console.log(error);
+  )
 
   const changeRepositoryProp = (): Repository[] => {
     return (
@@ -67,13 +63,10 @@ export const useGitHubRepositories = () => {
           updatedAt: item.updated_at,
           stargazersCount: item.stargazers_count,
           url: item.url,
-        };
+        }
       }) ?? []
-    );
-  };
-
-  console.log('Math.ceil(searchedItem?.total_count ?? 0 / PER_PAGE)')
-  console.log(Math.ceil(searchedItem?.total_count / PER_PAGE))
+    )
+  }
 
   return {
     repositories: changeRepositoryProp(),
@@ -83,5 +76,5 @@ export const useGitHubRepositories = () => {
     currentPage: page,
     setPage,
     perPage: PER_PAGE,
-  };
-};
+  }
+}
